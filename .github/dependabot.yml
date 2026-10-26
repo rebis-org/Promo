@@ -1,0 +1,56 @@
+version: 2
+updates:
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    target-branch: "main"
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "UTC"
+    labels:
+      - "kind/task"
+      - "status/todo"
+    open-pull-requests-limit: 3
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "deps(vendor)"
+  - package-ecosystem: "npm"
+    directory: "src/video"
+    target-branch: "main"
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "UTC"
+    labels:
+      - "kind/task"
+      - "status/todo"
+    open-pull-requests-limit: 3
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "deps(npm)"
+  - package-ecosystem: "pip"
+    directory: "src/audio"
+    target-branch: "main"
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "UTC"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 3
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "deps(pip)"
+  - package-ecosystem: "uv"
+    directory: "src/audio"
+    target-branch: "main"
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "UTC"
+    labels:
+      - "dependencies"
+    open-pull-requests-limit: 3
+    rebase-strategy: "auto"
+    commit-message:
+      prefix: "deps(uv)"

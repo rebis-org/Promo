@@ -1,0 +1,41 @@
+import { proof } from "./_proof";
+
+export default proof({
+  path: "src/common/kernel/src/fs.c",
+  hot: 12,
+  page: "4 / 6",
+  size: 18,
+  lines: [
+    `	bool moved_aside = false;`,
+    `	if (rename(target_path, backup) == 0) {`,
+    `		moved_aside = true;`,
+    `	} else if (errno != ENOENT) {`,
+    `		remove(staging_path);`,
+    `		return KERNEL_STATUS_IO_FAILURE;`,
+    `	}`,
+    ``,
+    `	if (rename(staging_path, target_path) != 0) {`,
+    `		if (moved_aside) {`,
+    `			// Restore before removing staging, so a failure`,
+    `			// leaves the target present.`,
+    `			(void)rename(backup, target_path);`,
+    `		}`,
+    `		remove(staging_path);`,
+    `		return KERNEL_STATUS_IO_FAILURE;`,
+    `	}`,
+  ],
+  claim: [
+    `commit(s, t):`,
+    `  rename(t, t + ".emission")   // the old file steps aside`,
+    `  rename(s, t)                 // the only atomic step`,
+    `  remove(t + ".emission")      // after it, never before`,
+  ],
+  grep: `rename(`,
+  hits: [
+    `src/common/kernel/src/fs.c:26:        if (rename(target_path, backup) == 0) {`,
+    `src/common/kernel/src/fs.c:33:        if (rename(staging_path, target_path) != 0) {`,
+    `src/common/kernel/src/fs.c:37:                        (void)rename(backup, target_path);`,
+  ],
+  answer: "3",
+  unit: "renames",
+});

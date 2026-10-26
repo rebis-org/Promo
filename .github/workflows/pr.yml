@@ -1,0 +1,18 @@
+name: PR
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - closed
+      - assigned
+      - unassigned
+
+jobs:
+  label:
+    name: Label
+    permissions:
+      issues: write
+      pull-requests: write
+    uses: rebis-org/Actions/.github/workflows/pr-label-status.yml@main

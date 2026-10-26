@@ -1,0 +1,35 @@
+{
+  "name": "video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fmt": "node_modules/.bin/oxfmt .oxfmtrc.json .oxlintrc.json package.json vite.config.ts tsconfig.json tsconfig.scripts.json scripts src",
+    "fmt:check": "node_modules/.bin/oxfmt .oxfmtrc.json .oxlintrc.json package.json vite.config.ts tsconfig.json tsconfig.scripts.json scripts src --check",
+    "lint": "vp lint -c .oxlintrc.json vite.config.ts scripts/*.ts src/main.ts src/timeline.ts src/scenes/*.ts src/engine/**/*.ts",
+    "quality": "npm run lint && npm run fmt:check",
+    "dev": "vite",
+    "build": "vite build",
+    "render": "node scripts/render.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/three": "^0.186.0",
+    "@types/ws": "^8.18.2",
+    "oxfmt": "^0.74.0",
+    "playwright-core": "^1.64.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "ws": "^8.22.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "nub",
+      "version": "^0.9.6",
+      "onFail": "warn"
+    }
+  }
+}
